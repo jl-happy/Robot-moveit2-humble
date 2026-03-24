@@ -1,0 +1,371 @@
+<?xml version="1.0"?>
+<!-- This URDF was automatically created by SolidWorks to URDF Exporter! Originally created by Stephen Brawner (brawner@gmail.com) 
+     Commit Version: 1.6.0-1-g15f4949  Build Version: 1.6.7594.29634
+     For more information, please see http://wiki.ros.org/sw_urdf_exporter -->
+<robot
+  name="gbt_description" xmlns:xacro="http://www.ros.org/wiki/xacro">
+  <link
+    name="base_link">
+    <inertial>
+      <origin
+        xyz="5.3346375504587E-06 -0.00059214591393983 0.0510653572680672"
+        rpy="0 0 0" />
+      <mass
+        value="1.11799442797851" />
+      <inertia
+        ixx="0.00207412624478233"
+        ixy="1.25613398112179E-06"
+        ixz="1.65547737935594E-07"
+        iyy="0.00194454164076036"
+        iyz="-2.30093266885301E-05"
+        izz="0.00276348351172803" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/visual/base_link.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/collision/base_link.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <link
+    name="link1">
+    <inertial>
+      <origin
+        xyz="0.00377919075056667 -2.51399014306912E-06 0.0869301328261824"
+        rpy="0 0 0" />
+      <mass
+        value="2.04479035782127" />
+      <inertia
+        ixx="0.00390129613020746"
+        ixy="5.43990541844285E-08"
+        ixz="-0.0004980592642129"
+        iyy="0.0039677211509232"
+        iyz="5.3399796374319E-08"
+        izz="0.00382371830243895" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/visual/link1.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/collision/link1.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint1"
+    type="revolute">
+    <origin
+      xyz="0 0 0.094"
+      rpy="0 0 -1.570797" />
+    <parent
+      link="base_link" />
+    <child
+      link="link1" />
+    <axis
+      xyz="0 0 1" />
+    <limit lower="-6.283185307179" upper="6.283185307179" velocity="3.14159" effort="10.0"/>
+  </joint>
+  <link
+    name="link2">
+    <inertial>
+      <origin
+        xyz="1.50618669053815E-07 0.212605780030747 0.0859526157746499"
+        rpy="0 0 0" />
+      <mass
+        value="6.10875492875952" />
+      <inertia
+        ixx="0.0267957710935857"
+        ixy="-1.34564598586249E-07"
+        ixz="6.02548747177494E-08"
+        iyy="0.0101014371917945"
+        iyz="1.33335511533887E-06"
+        izz="0.026506282255423" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/visual/link2.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/collision/link2.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint2"
+    type="revolute">
+    <origin
+      xyz="0.0630000000000007 0 0.0840208674128905"
+      rpy="1.57079632679489 -1.5707963267949 1.5707963267949" />
+    <parent
+      link="link1" />
+    <child
+      link="link2" />
+    <axis
+      xyz="0 0 -1" />
+    <limit lower="-1.483529864195" upper="4.625122517784" velocity="3.14159" effort="10.0"/>
+  </joint>
+  <link
+    name="link3">
+    <inertial>
+      <origin
+        xyz="5.87080347610989E-07 0.179889890579946 0.0641958228304825"
+        rpy="0 0 0" />
+      <mass
+        value="3.27878276509859" />
+      <inertia
+        ixx="0.0125366709718065"
+        ixy="5.81895610935822E-08"
+        ixz="-3.97959054903149E-08"
+        iyy="0.00380755431016305"
+        iyz="-0.000145643356590976"
+        izz="0.0122653626575394" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/visual/link3.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/collision/link3.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint3"
+    type="revolute">
+    <origin
+      xyz="0 0.42497913258711 0.00599999999999846"
+      rpy="-3.14159265358979 0 3.14159265358979" />
+    <parent
+      link="link2" />
+    <child
+      link="link3" />
+    <axis
+      xyz="0 0 1" />
+    <limit lower="-2.80998009571" upper="2.80998009571" velocity="3.14159" effort="10.0"/>
+  </joint>
+  <link
+    name="link4">
+    <inertial>
+      <origin
+        xyz="2.51890573646324E-06 0.000114371763710763 0.0530633105310244"
+        rpy="0 0 0" />
+      <mass
+        value="0.804364163350571" />
+      <inertia
+        ixx="0.000935080961535658"
+        ixy="3.62404012124143E-08"
+        ixz="6.43616167033178E-08"
+        iyy="0.000747593929769134"
+        iyz="-0.000128082798887313"
+        izz="0.000860162773869198" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/visual/link4.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/collision/link4.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint4"
+    type="revolute">
+    <origin
+      xyz="0 0.385 0.00370000000000101"
+      rpy="3.14159265358979 0 1.5707963267949" />
+    <parent
+      link="link3" />
+    <child
+      link="link4" />
+    <axis
+      xyz="0 0 -1" />
+    <limit lower="-1.483529864195" upper="4.625122517784" velocity="3.14159" effort="10.0"/>
+  </joint>
+  <link
+    name="link5">
+    <inertial>
+      <origin
+        xyz="0.000314682641719494 3.36716779089097E-06 -0.0530496283207993"
+        rpy="0 0 0" />
+      <mass
+        value="0.802210955732477" />
+      <inertia
+        ixx="0.000745372124504208"
+        ixy="3.89144466059342E-08"
+        ixz="0.000128783534943426"
+        iyy="0.000928034941984505"
+        iyz="-3.72342217212453E-08"
+        izz="0.000853283143640381" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/visual/link5.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/collision/link5.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint5"
+    type="revolute">
+    <origin
+      xyz="0 0.065299999999999 0.0579999999999997"
+      rpy="1.5707963267949 -1.5707963267949 0" />
+    <parent
+      link="link4" />
+    <child
+      link="link5" />
+    <axis
+      xyz="0 0 -1" />
+    <limit lower="-6.283185307179" upper="6.283185307179" velocity="3.14159" effort="10.0"/>
+  </joint>
+  <link
+    name="link6">
+    <inertial>
+      <origin
+        xyz="-4.55313953111396E-09 0.000174298782031901 0.0184965902111415"
+        rpy="0 0 0" />
+      <mass
+        value="0.129160189065118" />
+      <inertia
+        ixx="5.88476928477696E-05"
+        ixy="-1.3241461253261E-13"
+        ixz="-1.07663359102389E-12"
+        iyy="5.9570715686884E-05"
+        iyz="-8.25364157349739E-09"
+        izz="0.000102277220029045" />
+    </inertial>
+    <visual>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/visual/link6.STL" />
+      </geometry>
+      <material
+        name="">
+        <color
+          rgba="1 1 1 1" />
+      </material>
+    </visual>
+    <collision>
+      <origin
+        xyz="0 0 0"
+        rpy="0 0 0" />
+      <geometry>
+        <mesh
+          filename="file://$(find gbt_description)/meshes/collision/link6.STL" />
+      </geometry>
+    </collision>
+  </link>
+  <joint
+    name="joint6"
+    type="revolute">
+    <origin
+      xyz="0.0652999999999996 0 -0.0580000000000009"
+      rpy="-1.5707963267949 0 -1.5707963267949" />
+    <parent
+      link="link5" />
+    <child
+      link="link6" />
+    <axis
+      xyz="0 0 1" />
+    <limit lower="-6.283185307179" upper="6.283185307179" velocity="3.14159" effort="10.0"/>
+  </joint>
+</robot>

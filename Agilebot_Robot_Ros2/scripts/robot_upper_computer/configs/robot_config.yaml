@@ -1,0 +1,14 @@
+robot:
+  type: "UR5e"
+  ip_address: "192.168.1.100"
+  port: 30003
+  joint_count: 6
+
+simulation:
+  enabled: true
+  use_pybullet: true
+  visualization: "matplotlib"  # 暂时用matplotlib
+
+display:
+  update_rate: 20  # Hz
+  joint_digits: 3  # 小数点后位数

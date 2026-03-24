@@ -1,0 +1,522 @@
+openapi: 3.0.3
+info:
+  title: Robot Upper Computer Backend API
+  version: 1.0.0
+  description: |
+    协作机械臂上位机后端接口（OpenAPI风格）。
+
+    说明：
+    - 本文档覆盖 HTTP 接口。
+    - 实时流（robot/state、program/progress、trajectory/progress、system/alarm、system/log）建议使用 WebSocket。
+servers:
+  - url: http://localhost:8080
+    description: Local backend
+
+tags:
+  - name: System
+  - name: Robot Control
+  - name: Program
+  - name: Trajectory
+  - name: Config
+
+paths:
+  /api/system/info:
+    get:
+      tags: [System]
+      summary: 获取系统信息
+      operationId: getSystemInfo
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemInfo'
+
+  /api/system/health:
+    get:
+      tags: [System]
+      summary: 获取健康状态
+      operationId: getSystemHealth
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SystemHealth'
+
+  /api/robot/enable:
+    post:
+      tags: [Robot Control]
+      summary: 机器人使能
+      operationId: enableRobot
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/robot/disable:
+    post:
+      tags: [Robot Control]
+      summary: 机器人去使能
+      operationId: disableRobot
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/robot/emergency_stop:
+    post:
+      tags: [Robot Control]
+      summary: 急停
+      operationId: emergencyStop
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/robot/reset_emergency_stop:
+    post:
+      tags: [Robot Control]
+      summary: 急停复位
+      operationId: resetEmergencyStop
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/robot/clear_error:
+    post:
+      tags: [Robot Control]
+      summary: 清除故障
+      operationId: clearRobotError
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/robot/mode:
+    post:
+      tags: [Robot Control]
+      summary: 设置手动/自动模式
+      operationId: setRobotMode
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetModeRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/robot/jog:
+    post:
+      tags: [Robot Control]
+      summary: 关节点动
+      operationId: jogJoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/JogRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/robot/stop_joint:
+    post:
+      tags: [Robot Control]
+      summary: 停止指定关节
+      operationId: stopJoint
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/StopJointRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/program/start:
+    post:
+      tags: [Program]
+      summary: 启动程序执行
+      operationId: startProgram
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ProgramStartRequest'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/program/stop:
+    post:
+      tags: [Program]
+      summary: 停止程序
+      operationId: stopProgram
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/program/pause:
+    post:
+      tags: [Program]
+      summary: 暂停程序
+      operationId: pauseProgram
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/program/resume:
+    post:
+      tags: [Program]
+      summary: 恢复程序
+      operationId: resumeProgram
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/program/step:
+    post:
+      tags: [Program]
+      summary: 单步执行
+      operationId: stepProgram
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/trajectory/validate:
+    post:
+      tags: [Trajectory]
+      summary: 轨迹校验
+      operationId: validateTrajectory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TrajectoryPayload'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/trajectory/start:
+    post:
+      tags: [Trajectory]
+      summary: 启动轨迹执行
+      operationId: startTrajectory
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              allOf:
+                - $ref: '#/components/schemas/TrajectoryPayload'
+                - type: object
+                  properties:
+                    speed_scale:
+                      type: number
+                      minimum: 0.1
+                      maximum: 2.0
+                      default: 1.0
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/trajectory/stop:
+    post:
+      tags: [Trajectory]
+      summary: 停止轨迹执行
+      operationId: stopTrajectory
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/config/tcp:
+    get:
+      tags: [Config]
+      summary: 获取TCP配置
+      operationId: getTcpConfig
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TcpConfig'
+    put:
+      tags: [Config]
+      summary: 更新TCP配置
+      operationId: updateTcpConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TcpConfig'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/config/work_object:
+    get:
+      tags: [Config]
+      summary: 获取工件坐标系配置
+      operationId: getWorkObjectConfig
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/WorkObjectConfig'
+    put:
+      tags: [Config]
+      summary: 更新工件坐标系配置
+      operationId: updateWorkObjectConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/WorkObjectConfig'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+  /api/config/safety:
+    get:
+      tags: [Config]
+      summary: 获取安全配置
+      operationId: getSafetyConfig
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SafetyConfig'
+    put:
+      tags: [Config]
+      summary: 更新安全配置
+      operationId: updateSafetyConfig
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SafetyConfig'
+      responses:
+        '200':
+          $ref: '#/components/responses/ActionOk'
+
+components:
+  responses:
+    ActionOk:
+      description: 执行结果
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ActionResponse'
+
+  schemas:
+    ActionResponse:
+      type: object
+      properties:
+        ok:
+          type: boolean
+        message:
+          type: string
+          nullable: true
+        error_code:
+          type: integer
+          nullable: true
+        error_message:
+          type: string
+          nullable: true
+      required: [ok]
+
+    SystemInfo:
+      type: object
+      properties:
+        name: { type: string }
+        version: { type: string }
+        robot_model: { type: string }
+        joint_count: { type: integer }
+        sim_mode: { type: boolean }
+      required: [name, version, robot_model, joint_count, sim_mode]
+
+    SystemHealth:
+      type: object
+      properties:
+        connected: { type: boolean }
+        latency_ms: { type: number }
+        last_heartbeat: { type: string, format: date-time }
+      required: [connected]
+
+    SetModeRequest:
+      type: object
+      properties:
+        manual: { type: boolean }
+      required: [manual]
+
+    JogRequest:
+      type: object
+      properties:
+        joint_id:
+          type: integer
+          minimum: 0
+          maximum: 5
+        velocity:
+          type: number
+      required: [joint_id, velocity]
+
+    StopJointRequest:
+      type: object
+      properties:
+        joint_id:
+          type: integer
+          minimum: 0
+          maximum: 5
+      required: [joint_id]
+
+    ProgramStartRequest:
+      type: object
+      properties:
+        name: { type: string }
+        steps:
+          type: array
+          items:
+            $ref: '#/components/schemas/ProgramStep'
+      required: [name, steps]
+
+    ProgramStep:
+      type: object
+      properties:
+        id: { type: integer }
+        line_number: { type: integer }
+        command:
+          type: string
+          enum: [MoveJ, MoveL, Wait]
+        parameters:
+          type: object
+          additionalProperties:
+            type: string
+        comment:
+          type: string
+      required: [id, line_number, command, parameters]
+
+    TrajectoryPayload:
+      type: object
+      properties:
+        joint_count:
+          type: integer
+          enum: [6]
+        points:
+          type: array
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/TrajectoryPoint'
+      required: [joint_count, points]
+
+    TrajectoryPoint:
+      type: object
+      properties:
+        t:
+          type: number
+          minimum: 0
+        positions:
+          type: array
+          minItems: 6
+          maxItems: 6
+          items:
+            type: number
+      required: [t, positions]
+
+    TcpConfig:
+      type: object
+      properties:
+        tools:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              position:
+                type: array
+                minItems: 3
+                maxItems: 3
+                items: { type: number }
+              orientation_euler:
+                type: array
+                minItems: 3
+                maxItems: 3
+                items: { type: number }
+              frame_id: { type: string }
+            required: [name, position, orientation_euler, frame_id]
+      required: [tools]
+
+    WorkObjectConfig:
+      type: object
+      properties:
+        work_objects:
+          type: array
+          items:
+            type: object
+            properties:
+              name: { type: string }
+              position:
+                type: array
+                minItems: 3
+                maxItems: 3
+                items: { type: number }
+              orientation_euler:
+                type: array
+                minItems: 3
+                maxItems: 3
+                items: { type: number }
+              frame_id: { type: string }
+              user_frame_id: { type: integer }
+            required: [name, position, orientation_euler, frame_id, user_frame_id]
+      required: [work_objects]
+
+    SafetyConfig:
+      type: object
+      properties:
+        joint_limits_deg:
+          type: array
+          minItems: 6
+          maxItems: 6
+          items:
+            type: array
+            minItems: 2
+            maxItems: 2
+            items: { type: number }
+        tcp_max_velocity: { type: number }
+        tcp_max_acceleration: { type: number }
+        collision_sensitivity: { type: integer, minimum: 1, maximum: 5 }
+        enable_soft_limits: { type: boolean }
+        enable_collision_detection: { type: boolean }
+      required:
+        - joint_limits_deg
+        - tcp_max_velocity
+        - tcp_max_acceleration
+        - collision_sensitivity
+        - enable_soft_limits
+        - enable_collision_detection
+
+x-realtime-topics:
+  ws_url: ws://localhost:8080/ws
+  topics:
+    - name: robot/state
+      description: 高频机器人状态流，建议 20-50Hz
+    - name: program/progress
+      description: 程序执行进度
+    - name: trajectory/progress
+      description: 轨迹执行进度
+    - name: system/alarm
+      description: 告警事件（WARN/ERROR）
+    - name: system/log
+      description: 系统日志流（INFO/WARN/ERROR）

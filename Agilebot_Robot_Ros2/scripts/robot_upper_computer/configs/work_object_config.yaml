@@ -1,0 +1,12 @@
+work_objects:
+- frame_id: world
+  name: base
+  orientation_euler:
+  - 0.0
+  - 0.0
+  - 0.0
+  position:
+  - 1.0
+  - 0.0
+  - 0.0
+  user_frame_id: 0

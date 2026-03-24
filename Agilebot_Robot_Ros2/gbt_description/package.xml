@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>gbt_description</name>
+  <version>0.0.1</version>
+  <description>The gbt_description is a ROS 2 package used for describing robot models. 
+  The package contains URDF (Unified Robot Description Format) files, related 3D models, and configuration files. 
+  It can be loaded by other components in ROS 2 (such as MoveIt2, Gazebo, etc.) for tasks such as simulation, planning, and control.</description>
+  <maintainer email="lidesheng@agilebot.com.cn">lidesheng</maintainer>
+  <license>BSD-3-Clause</license>
+
+  <test_depend>ament_copyright</test_depend>
+  <test_depend>ament_flake8</test_depend>
+  <test_depend>ament_pep257</test_depend>
+  <test_depend>python3-pytest</test_depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+    <!-- <gazebo_ros gazebo_model_path="${prefix}/.."/> -->
+  </export>
+</package>

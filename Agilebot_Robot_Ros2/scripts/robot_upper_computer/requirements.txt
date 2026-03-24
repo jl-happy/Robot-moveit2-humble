@@ -1,0 +1,15 @@
+# 核心依赖（部分已安装）
+PySide6>=6.5.0
+numpy>=1.24.0          # 已安装
+pyyaml>=6.0
+pyqtgraph>=0.13.0
+opencv-python>=4.8.0
+matplotlib>=3.10.8      # 已安装
+
+# 开发工具（已安装）
+black>=26.1.0           # 已安装
+isort>=7.0.0            # 已安装
+
+# 机器人相关（后续）
+# pyserial>=3.5
+# pybullet>=3.2.5
